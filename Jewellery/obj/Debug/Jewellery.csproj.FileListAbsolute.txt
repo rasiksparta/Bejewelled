@@ -1,0 +1,5 @@
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\bin\Debug\Jewellery.dll
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\bin\Debug\Jewellery.pdb
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery.csproj.CoreCompileInputs.cache
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery.dll
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery.pdb

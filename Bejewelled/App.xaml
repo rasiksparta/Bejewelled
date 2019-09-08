@@ -1,0 +1,61 @@
+﻿<Application x:Class="Bejewelled.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Bejewelled"
+             xmlns:jewel="clr-namespace:Jewellery;assembly=Jewellery"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="redjewel" UriSource="pack://application:,,,/Bejewelled;component/Resources/red.png"></BitmapImage>
+            <BitmapImage x:Key="bluejewel" UriSource="pack://application:,,,/Bejewelled;component/Resources/blue.png"></BitmapImage>
+            <BitmapImage x:Key="purplejewel" UriSource="pack://application:,,,/Bejewelled;component/Resources/purple.png"></BitmapImage>
+            <Style TargetType="jewel:RedJewel">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="jewel:RedJewel">
+                                <Button>
+                                    <StackPanel>
+                                        <Image Source="{StaticResource redjewel}"></Image>
+                                    </StackPanel>
+                                </Button>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+
+            <Style TargetType="jewel:BlueJewel">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="jewel:BlueJewel">
+                                <Button>
+                                    <StackPanel>
+                                        <Image Source="{StaticResource bluejewel}"></Image>
+                                    </StackPanel>
+                                </Button>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+
+            <Style TargetType="jewel:PurpleJewel">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="jewel:PurpleJewel">
+                                <Button>
+                                    <StackPanel>
+                                        <Image Source="{StaticResource purplejewel}"></Image>
+                                    </StackPanel>
+                                </Button>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
