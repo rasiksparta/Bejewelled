@@ -15,18 +15,20 @@ namespace Jewellery
         protected JewelSwitcher switcher;
         protected Type type;
 
+        private JewelManager manager;
+
         public enum Type
         {
             BLUE, RED, PURPLE
         }
 
-        public Jewel(int x, int y, JewelSwitcher switcher)
+        public Jewel(int x, int y, JewelSwitcher switcher, JewelManager manager)
         {
             this.x = x;
             this.y = y;
             this.switcher = switcher;
+            this.manager = manager;
             this.Click += ButtonClick;
-            //SetJewelImage();
         }
 
         public int X { get => x; set => x = value; }
@@ -43,6 +45,25 @@ namespace Jewellery
 
             jewel.X = prevX;
             jewel.Y = prevY;
+
+            manager.JewelArr[jewel.X, jewel.Y] = jewel;
+            manager.JewelArr[this.x, this.y] = this;
+        }
+
+        public List<Jewel> GetMachingNeighbour()
+        {
+            List<Jewel> matchineNeighbour = new List<Jewel>();
+            Jewel jewelLeft = manager.JewelArr[this.x - 1, this.y];
+            Jewel jewelRight = manager.JewelArr[this.x + 1, this.y];
+            Jewel jewelUp = manager.JewelArr[this.x, this.y - 1];
+            Jewel jewelDown = manager.JewelArr[this.x, this.y + 1];
+
+            if (jewelLeft.JewelType == this.type) matchineNeighbour.Add(jewelLeft);
+            if (jewelRight.JewelType == this.type) matchineNeighbour.Add(jewelRight);
+            if (jewelUp.JewelType == this.type) matchineNeighbour.Add(jewelUp);
+            if (jewelDown.JewelType == this.type) matchineNeighbour.Add(jewelDown);
+
+            return matchineNeighbour;
         }
 
         protected virtual void SetJewelImage()
@@ -66,6 +87,8 @@ namespace Jewellery
             else
             {
                 switcher.Switch(this);
+                manager.removeJewels(this);
+               // manager.removeJewels(switcher.Jewel);
             }
         }
     }

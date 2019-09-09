@@ -8,7 +8,7 @@ namespace Jewellery
 {
     public class RedJewel : Jewel
     {
-        public RedJewel(int x, int y, JewelSwitcher switcher) : base(x, y, switcher)
+        public RedJewel(int x, int y, JewelSwitcher switcher, JewelManager manager) : base(x, y, switcher, manager)
         {
             type = Type.RED;
         }

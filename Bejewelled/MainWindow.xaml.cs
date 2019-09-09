@@ -35,44 +35,23 @@ namespace Bejewelled
             rand = new Random();
             grid = gamegrid;
             switcher = new JewelSwitcher(grid);
-            manager = new JewelManager(ROW, COLUMN, switcher);
-            Update();
+            manager = new JewelManager(ROW, COLUMN, switcher, grid);
+            manager.Generate();
+            manager.Update();
         }
 
         public void Update()
         {
-            Jewel[,] jewelArray = manager.Generate();
+            Jewel[,] jewelArray = manager.JewelArr;
 
             foreach(Jewel jewel in jewelArray)
             {
-                grid.Children.Add(jewel);
-                Grid.SetColumn(jewel, jewel.X);
-                Grid.SetRow(jewel, jewel.Y);
-            }
-            /*for (int col = 0; col < COLUMN; col++)
-            {
-                for(int row = 0; row < ROW; row++)
+                if (jewel != null)
                 {
-                    double x = rand.Next(3);
-                    int foo = (int)Math.Floor(x);
-                    Jewel jewel = CreateJewel(foo, col, row);                    
                     grid.Children.Add(jewel);
                     Grid.SetColumn(jewel, jewel.X);
                     Grid.SetRow(jewel, jewel.Y);
                 }
-            }*/
-        }
-
-        public Jewel CreateJewel(int type, int x, int y)
-        {
-            switch (type)
-            {
-                case 0:
-                    return new RedJewel(x, y, switcher);
-                case 1:
-                    return new PurpleJewel(x, y, switcher);
-                default:
-                    return new BlueJewel(x, y, switcher);
             }
         }
 

@@ -18,18 +18,21 @@ namespace Jewellery
          */
         public JewelSwitcher(Grid grid)
         {
-            this.jewel = null;
+            this.jewel = null;            
         }
 
 
         /**
          * Setter
          */
-        public Jewel Jewel { set => jewel = value; }
+        public Jewel Jewel { get => jewel;  set => jewel = value; }
 
 
         /**
          * Switch two jewel
+         * @return 0, no switch occured
+         * @return -1, passed jewel has moved left horizontally or up vertically
+         * @return 1, passed jewel has moved right horizontally or up vertically
          */
         public void Switch(Jewel jewel){
             if(this.jewel != null)
