@@ -8,12 +8,12 @@ namespace Jewellery
 {
     public class BlueJewel : Jewel
     {
-        public BlueJewel(int x, int y) : base(x, y)
+        public BlueJewel(int x, int y, JewelSwitcher switcher) : base(x, y, switcher)
         {
-
+            type = Type.BLUE;
         }
 
-        public override void SetJewelImage()
+        protected override void SetJewelImage()
         {
 
         }

@@ -8,12 +8,12 @@ namespace Jewellery
 {
     public class PurpleJewel : Jewel
     {
-        public PurpleJewel(int x, int y) : base(x, y)
+        public PurpleJewel(int x, int y, JewelSwitcher switcher) : base(x, y, switcher)
         {
-
+            type = Type.PURPLE;
         }
 
-        public override void SetJewelImage()
+        protected override void SetJewelImage()
         {
 
         }

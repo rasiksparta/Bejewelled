@@ -17,6 +17,18 @@
                                 <Button>
                                     <StackPanel>
                                         <Image Source="{StaticResource redjewel}"></Image>
+
+                                        <!-- Set triggers -->
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="#ffd700"></Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                        <!-- -->
                                     </StackPanel>
                                 </Button>
                             </ControlTemplate>
@@ -33,6 +45,20 @@
                                 <Button>
                                     <StackPanel>
                                         <Image Source="{StaticResource bluejewel}"></Image>
+
+                                        <!-- Set triggers -->
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="#ffd700"></Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                        <!-- -->
+                                        
+                                        
                                     </StackPanel>
                                 </Button>
                             </ControlTemplate>
@@ -49,6 +75,20 @@
                                 <Button>
                                     <StackPanel>
                                         <Image Source="{StaticResource purplejewel}"></Image>
+
+                                        <!-- Set triggers -->
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="#ffd700"></Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                        <!-- -->
+                                        
+                                        
                                     </StackPanel>
                                 </Button>
                             </ControlTemplate>

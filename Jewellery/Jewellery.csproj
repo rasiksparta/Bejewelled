@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlueJewel.cs" />
+    <Compile Include="JewelManager.cs" />
+    <Compile Include="JewelSwitcher.cs" />
     <Compile Include="PurpleJewel.cs" />
     <Compile Include="RedJewel.cs" />
     <Compile Include="Jewel.cs" />
