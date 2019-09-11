@@ -5,22 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace Jewellery
 {
     public class JewelManager
     {
-        Jewel[,] jewelArr;
-        JewelSwitcher switcher;
-        Random rand;
-        private Grid grid;
-        private int colNum, rowNum;
+        Jewel[,] jewelArr; // 2D array that stores all the jewels, index corresponds to the jewel's ingame grid index
+        JewelSwitcher switcher; // JeweSwitcher object for switching jewels
+        Random rand;  // Random number generator
+        private Grid grid; // The game grid 
+        private int colNum, rowNum; 
 
         bool addJewel;
+        private HashSet<Jewel> alteredJewels; // list of jewels that have been added as replacement or jewel whose location has been changed
+                                              // since last move
 
-        public Jewel[,] JewelArr { get => jewelArr; }
+        private Container container;
 
-        public JewelManager(int rowNum, int colNum, JewelSwitcher switcher, Grid grid)
+        /**
+         * Constructor
+         * @param rowNum, the number of rows in the grid
+         * @param colNum, the number of columns in the grid
+         * @param switcher, jewel switcher object 
+         * @param grid, WPF element grid for the game
+         */
+        public JewelManager(int rowNum, int colNum, JewelSwitcher switcher, Grid grid, Container container)
         {
             jewelArr = new Jewel[rowNum, colNum];
             rand = new Random();
@@ -29,7 +39,12 @@ namespace Jewellery
             this.colNum = colNum;
             this.rowNum = rowNum;
             addJewel = true;
+            alteredJewels = new HashSet<Jewel>();
+            this.container = container;
         }
+
+        public Jewel[,] JewelArr { get => jewelArr; }
+        public Container Container { get => container; set => container = value; }
 
         /**
          * Generate the 2D array of jewel before initiating the game
@@ -41,15 +56,33 @@ namespace Jewellery
             {
                 for(int col = 0; col < jewelArr.GetLength(1); col++)
                 {
-                    double x = rand.Next(3);
-                    int foo = (int)Math.Floor(x);
-                    Jewel jewel = CreateJewel(foo, col, row);
+                    bool goodToPlace = false; // True if the jewel is fit to be placed
+                    Jewel jewel = null;
+                    while (!goodToPlace)
+                    {
+                        double x = rand.Next(3);
+                        int foo = (int)Math.Floor(x);
+                        jewel = CreateJewel(foo, col, row);
+
+                        //Avoid creating any chains in the starting configuration
+                        if(CheckForChain(0, jewel, new HashSet<Jewel>()) < 3)
+                        {
+                            goodToPlace = true;
+                        }
+                    }
+                   
                     jewelArr[col, row] = jewel;
                 }
             }
+            Update(jewelArr);
         }
 
-        public void Update()
+        /**
+         * Update 
+         * 
+         * This hasn't been implemented properly
+         */
+        public void Update(Jewel[,] jewelArr)
         {
             if (addJewel)
             {
@@ -69,7 +102,7 @@ namespace Jewellery
          * @param int x, y, the grid position of the object
          * @return the jewel object
          */
-        public Jewel CreateJewel(int type, int x, int y)
+        private Jewel CreateJewel(int type, int x, int y)
         {
             switch (type)
             {
@@ -82,50 +115,160 @@ namespace Jewellery
             }
         }
 
-        public void removeJewels(Jewel jewel)
+        /**
+         * Remove a list of jewels
+         * @param jewels, the list of jewels to be removed
+         */
+        public void RemoveJewels(HashSet<Jewel> jewels)
         {
-           // List<Jewel> removelist = new List<Jewel>();
-            bool shouldRemove = false;
-            if (CheckForChain(jewel, 1, true, 1) >= 3) shouldRemove = true;
-            if (CheckForChain(jewel, 1, true, -1) >= 3) shouldRemove = true;
-            if (CheckForChain(jewel, 1, false, 1) >= 3) shouldRemove = true;
-            if (CheckForChain(jewel, 1, false, -1) >= 3) shouldRemove = true;
-            if (shouldRemove) jewel.Visibility = Visibility.Hidden;
-            // remove jewels
+            bool isLast = false; // check for last element
+            HashSet<Jewel> removeList = new HashSet<Jewel>();
+
+            // Get all jewels in valid chains 
+            foreach (Jewel jewel in jewels)
+            {
+                CheckForChain(0, jewel, removeList);   
+                
+            }
+
+            container.ScoreTracker.ScoreIncrement(removeList.Count);
+
+            // remove the jewels
+            foreach (Jewel jewelToRemove in removeList)
+            {
+                jewelArr[jewelToRemove.X, jewelToRemove.Y] = null;
+                if (removeList.Last().Equals(jewelToRemove))
+                {
+                    isLast = true; 
+                }
+                jewelToRemove.Destroy(isLast);
+            }
+
+            if (container.ScoreTracker.getMoveCount() <= 0 && removeList.Count == 0)
+            {
+                container.End();
+            }
         }
 
-        private int CheckForChain(Jewel jewel, int count, bool recurseHorizontal, int dir)
+        /**
+         * Replace a give jewel
+         * @param jewel, the jewel to be replaced
+         */
+        public void ReplaceJewel(Jewel jewel)
         {
-            //MessageBoxResult ms = MessageBox.Show("recursing" +" count:" + count + ", direction:" + dir + ", type:" + jewel.JewelType 
-            //    + " coordinates:" + jewel.X);
-            int recurseStep = count;
+            int type = (int)rand.Next(3);
+            Jewel newJewel = CreateJewel(type, jewel.X, jewel.Y);
 
-            if((dir == 1 && jewel.X >= colNum - 1) || (dir == -1 && jewel.X <= 0))
-            {
-                if (count >= 3) jewel.Visibility = Visibility.Hidden;
-                return count;
-            }
-            Jewel next = recurseHorizontal? jewelArr[jewel.X + dir, jewel.Y] : jewelArr[jewel.X, jewel.Y + dir];
-            
-            if (next.JewelType == jewel.JewelType)
-            {
-                count++;          
-                count = CheckForChain(next, count, true, dir);
-            }
-         
-            if(count >= 3 && recurseStep != 1)
-            {
-                jewel.Visibility = Visibility.Hidden;
-            }
-        
+            alteredJewels.Add(newJewel);
 
+            jewelArr[jewel.X, jewel.Y] = newJewel;
+            grid.Children.Remove(jewel);
+            grid.Children.Add(newJewel);
+            Grid.SetColumn(newJewel, newJewel.X);
+            Grid.SetRow(newJewel, newJewel.Y);
+            //RemoveJewel(newJewel);
+        }
+
+        /**
+         * 
+         */
+        public void RefillJewels()
+        {
+            HashSet<Jewel> newJewels = new HashSet<Jewel>();
+           
+            foreach(Jewel jewel in alteredJewels)
+            {
+                int type = (int)rand.Next(3);
+                Jewel newJewel = CreateJewel(type, jewel.X, jewel.Y);
+                newJewels.Add(newJewel);
+                jewelArr[jewel.X, jewel.Y] = newJewel;
+
+                grid.Children.Remove(jewel);
+                grid.Children.Add(newJewel);
+                Grid.SetColumn(newJewel, newJewel.X);
+                Grid.SetRow(newJewel, newJewel.Y);
+            }
+
+            alteredJewels.Clear();
+            //alteredJewels.RemoveAll((arg) => { return true; });
+
+            RemoveJewels(newJewels);
+        }
+
+        /**
+         * Add a jewel to the list of altered jewel
+         * Note: An altered jewel is a jewel which has been added as replacement or has changed its location
+         */
+        public void AddToAlteredList(Jewel jewel)
+        {
+            alteredJewels.Add(jewel);
+        }
+
+        /**
+         * Check if a chain of jewels of same type exists either horizontally or vertically
+         * @param count, the number of jewels in the chain
+         * @param jewel, the starting jewel 
+         * @removeList, the list of all jewels in the chain of 3 which will be removed 
+         * @direction, the direction of search, LEFT, RIGHT, UP or DOWN
+         * @root, the previous jewel in chain
+         * 
+         * @return, the count of jewels in chain
+         */
+        private int CheckForChain(int count, Jewel jewel, HashSet<Jewel> removeList ,Jewel.Direction direction = Jewel.Direction.LEFT ,Jewel root = null)
+        {
+            count++;
+            // if root is null, which means this is the first jewel from where we start checking for a chain
+            if(root == null) {
+                // check if there are any neighbouring jewel of same type
+                Dictionary<Jewel.Direction,Jewel> branches = jewel.GetMachingNeighbour();
+                
+
+                foreach (Jewel.Direction dir in branches.Keys)
+                {
+                    Jewel branch;
+                    branches.TryGetValue(dir, out branch);
+                    count = CheckForChain(count, branch, removeList, dir, jewel);
+
+                    branches.TryGetValue(Jewel.GetOppositeDirection(dir), out branch);
+                    if(branch != null)
+                    {
+                        count = CheckForChain(count, branch, removeList, Jewel.GetOppositeDirection(dir), jewel);
+                    }
+
+                    if (count >= 3)
+                    {
+                        removeList.Add(jewel);
+                        return count;
+                    }
+                    else
+                    {
+                        count = 1;
+                    }
+                }
+            }
+            else
+            {
+                Dictionary<Jewel.Direction, Jewel> branches = jewel.GetMachingNeighbour();
+
+                // Keep checking for chain in the same direction as this jewel was reached from its root element
+                if (branches.Keys.Contains(direction))
+                {
+                    Jewel branch;
+                    branches.TryGetValue(direction, out branch);
+                    count = CheckForChain(count, branch, removeList, direction, jewel);
+                }
+                
+                if (count >= 3)
+                {
+                    removeList.Add(jewel);
+                }
+            }
             return count;
         }
 
-        private int CheckForChain2(Jewel jewel)
+        private void DropJewels( )
         {
 
-            return 0;
         }
     }
 }

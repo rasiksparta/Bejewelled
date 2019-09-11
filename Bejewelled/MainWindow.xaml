@@ -5,13 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bejewelled"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="700">
     <Grid x:Name="gamegrid">
-        <!--<Button x:Name="custombutton">
-            <StackPanel>
-                <Image Source="{StaticResource redjewel}"></Image>
-            </StackPanel>
-        </Button>-->
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -22,20 +17,10 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition>
+                <ColumnDefinition.Width>200</ColumnDefinition.Width>
+            </ColumnDefinition>
         </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -45,8 +30,57 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition>
+                <RowDefinition.Height>100</RowDefinition.Height>
+            </RowDefinition>
         </Grid.RowDefinitions>
+        <TextBlock Grid.Column="9" Grid.Row="0" HorizontalAlignment="Center">
+            <TextBlock.Text>Fake Jewelled</TextBlock.Text>
+            <TextElement.FontSize>30</TextElement.FontSize>
+            <TextElement.Foreground>GOLD</TextElement.Foreground>
+            <TextElement.FontWeight>Bold</TextElement.FontWeight>
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Background" Value="Red"></Setter>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBlock Grid.Column="9" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Text>Remaining Moves</TextBlock.Text>
+            <TextElement.FontSize>20</TextElement.FontSize>
+            <TextElement.FontWeight>Bold</TextElement.FontWeight>
+            
+        </TextBlock>
+        <TextBlock x:Name ="movecount" Grid.Column="9" Grid.Row="3" HorizontalAlignment="Center">
+            <TextBlock.Text>0</TextBlock.Text>
+            <TextElement.FontSize>35</TextElement.FontSize>
+            <TextElement.FontWeight>Bold</TextElement.FontWeight>
+        </TextBlock>
+
+        <TextBlock Grid.Column="9" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Text>Score</TextBlock.Text>
+            <TextElement.FontSize>20</TextElement.FontSize>
+            <TextElement.FontWeight>Bold</TextElement.FontWeight>
+        </TextBlock>
+        <TextBlock x:Name="score" Grid.Column="9" Grid.Row="6" HorizontalAlignment="Center">
+            <TextBlock.Text>0</TextBlock.Text>
+            <TextElement.FontSize>35</TextElement.FontSize>
+            <TextElement.FontWeight>Bold</TextElement.FontWeight>
+        </TextBlock>
+
+        <Rectangle Grid.Row="9" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="9" Grid.Column="1" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="9" Grid.Column="2" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="9" Grid.Column="3" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="9" Grid.Column="4" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="9" Grid.Column="5" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="9" Grid.Column="6" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="9" Grid.Column="7" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="9" Grid.Column="8" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="1" Grid.Column="8" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="4" Grid.Column="8" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="7" Grid.Column="8" Fill="OliveDrab"></Rectangle>
+        <Rectangle Grid.Row="8" Grid.Column="8" Fill="OliveDrab"></Rectangle>
     </Grid>
+
 </Window>

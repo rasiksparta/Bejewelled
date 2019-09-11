@@ -24,35 +24,14 @@ namespace Bejewelled
         public const int ROW = 8;
         public const int COLUMN = 8;
 
-        JewelSwitcher switcher;
-        JewelManager manager;
-
         Grid grid;
-        Random rand;
         public MainWindow()
         {
             InitializeComponent();
-            rand = new Random();
+           // rand = new Random();
             grid = gamegrid;
-            switcher = new JewelSwitcher(grid);
-            manager = new JewelManager(ROW, COLUMN, switcher, grid);
-            manager.Generate();
-            manager.Update();
-        }
-
-        public void Update()
-        {
-            Jewel[,] jewelArray = manager.JewelArr;
-
-            foreach(Jewel jewel in jewelArray)
-            {
-                if (jewel != null)
-                {
-                    grid.Children.Add(jewel);
-                    Grid.SetColumn(jewel, jewel.X);
-                    Grid.SetRow(jewel, jewel.Y);
-                }
-            }
+            Container container = new Container(grid, score, movecount, 10);
+            container.init();
         }
 
     }

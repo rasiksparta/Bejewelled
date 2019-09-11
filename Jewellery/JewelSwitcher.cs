@@ -30,22 +30,20 @@ namespace Jewellery
 
         /**
          * Switch two jewel
-         * @return 0, no switch occured
-         * @return -1, passed jewel has moved left horizontally or up vertically
-         * @return 1, passed jewel has moved right horizontally or up vertically
+         *      
          */
-        public void Switch(Jewel jewel){
+        public bool Switch(Jewel jewel){
             if(this.jewel != null)
             {
                 if (this.jewel == jewel)
                 {
-                    return;
+                    return false;
                 }
 
                 if (!CheckIfNeighbours(this.jewel, jewel))
                 {
                     this.jewel = jewel;
-                    return;
+                    return false;
                 }
                 this.jewel.SwitchPlace(jewel);
 
@@ -55,7 +53,9 @@ namespace Jewellery
                 Grid.SetRow(this.jewel, this.jewel.Y);
 
                 this.jewel = null;
+                return true;
             }
+            return false;
         }
 
         public bool IsFree()
