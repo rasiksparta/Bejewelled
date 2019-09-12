@@ -4,3 +4,8 @@ C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery
 C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery.dll
 C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery.pdb
 C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery.csprojAssemblyReference.cache
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\FinalMessage.g.cs
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery_MarkupCompile.cache
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery_MarkupCompile.lref
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\FinalMessage.baml
+C:\Users\Rasik Rana\Desktop\csharp\Game\bejewelled\Jewellery\obj\Debug\Jewellery.g.resources

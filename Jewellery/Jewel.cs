@@ -191,7 +191,10 @@ namespace Jewellery
          */
         protected virtual void ButtonClick(object sender, RoutedEventArgs e)
         {
-
+            if (manager.Container.PlayerWait)
+            {
+                return;
+            }
             //MessageBoxResult box = MessageBox.Show("A jewel is clicked", "My App", MessageBoxButton.YesNoCancel);
             if (switcher.IsFree())
             {
@@ -202,6 +205,7 @@ namespace Jewellery
                 Jewel otherJewel = switcher.Jewel;
                 if (switcher.Switch(this))
                 {
+                    manager.Container.PlayerWait = true;
                     manager.Container.ScoreTracker.moveDecrement();
                     HashSet<Jewel> twoJewels = new HashSet<Jewel>() { this, otherJewel};
                     manager.RemoveJewels(twoJewels);    

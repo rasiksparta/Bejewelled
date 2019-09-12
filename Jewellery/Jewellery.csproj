@@ -35,6 +35,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +47,7 @@
   <ItemGroup>
     <Compile Include="BlueJewel.cs" />
     <Compile Include="Container.cs" />
+    <Compile Include="FinalViewModel.cs" />
     <Compile Include="ScoreTracker.cs" />
     <Compile Include="JewelManager.cs" />
     <Compile Include="JewelSwitcher.cs" />
@@ -53,6 +55,15 @@
     <Compile Include="RedJewel.cs" />
     <Compile Include="Jewel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FinalMessage.xaml.cs">
+      <DependentUpon>FinalMessage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="FinalMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

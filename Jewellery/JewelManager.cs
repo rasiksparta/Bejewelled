@@ -144,33 +144,18 @@ namespace Jewellery
                 jewelToRemove.Destroy(isLast);
             }
 
-            if (container.ScoreTracker.getMoveCount() <= 0 && removeList.Count == 0)
+            if (removeList.Count == 0)
             {
-                container.End();
+                if (container.ScoreTracker.getMoveCount() <= 0)
+                {
+                    container.End();
+                }
+                container.PlayerWait = false;
             }
         }
 
         /**
-         * Replace a give jewel
-         * @param jewel, the jewel to be replaced
-         */
-        public void ReplaceJewel(Jewel jewel)
-        {
-            int type = (int)rand.Next(3);
-            Jewel newJewel = CreateJewel(type, jewel.X, jewel.Y);
-
-            alteredJewels.Add(newJewel);
-
-            jewelArr[jewel.X, jewel.Y] = newJewel;
-            grid.Children.Remove(jewel);
-            grid.Children.Add(newJewel);
-            Grid.SetColumn(newJewel, newJewel.X);
-            Grid.SetRow(newJewel, newJewel.Y);
-            //RemoveJewel(newJewel);
-        }
-
-        /**
-         * 
+         * Refill grid with jewels after jewels are removed from the grid
          */
         public void RefillJewels()
         {
@@ -190,8 +175,6 @@ namespace Jewellery
             }
 
             alteredJewels.Clear();
-            //alteredJewels.RemoveAll((arg) => { return true; });
-
             RemoveJewels(newJewels);
         }
 
@@ -228,7 +211,7 @@ namespace Jewellery
                     Jewel branch;
                     branches.TryGetValue(dir, out branch);
                     count = CheckForChain(count, branch, removeList, dir, jewel);
-
+                    branch = null;
                     branches.TryGetValue(Jewel.GetOppositeDirection(dir), out branch);
                     if(branch != null)
                     {
@@ -243,6 +226,7 @@ namespace Jewellery
                     else
                     {
                         count = 1;
+                        removeList.Clear();
                     }
                 }
             }
@@ -258,17 +242,12 @@ namespace Jewellery
                     count = CheckForChain(count, branch, removeList, direction, jewel);
                 }
                 
-                if (count >= 3)
+                if (count >= 2)
                 {
                     removeList.Add(jewel);
                 }
             }
             return count;
-        }
-
-        private void DropJewels( )
-        {
-
         }
     }
 }

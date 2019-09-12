@@ -4,10 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bejewelled"
+        xmlns:jewel="clr-namespace:Jewellery;assembly=Jewellery"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="700">
-    <Grid x:Name="gamegrid">
 
+    <Window.Resources>
+        <DataTemplate x:Name="finalmessagetemplate" DataType="{x:Type jewel:FinalViewModel}">
+            <jewel:FinalMessage DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid x:Name="gamegrid">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -34,16 +41,14 @@
                 <RowDefinition.Height>100</RowDefinition.Height>
             </RowDefinition>
         </Grid.RowDefinitions>
+        <Rectangle Grid.Column="9">
+            <Rectangle.Fill>Red</Rectangle.Fill>
+        </Rectangle>
         <TextBlock Grid.Column="9" Grid.Row="0" HorizontalAlignment="Center">
             <TextBlock.Text>Fake Jewelled</TextBlock.Text>
             <TextElement.FontSize>30</TextElement.FontSize>
             <TextElement.Foreground>GOLD</TextElement.Foreground>
             <TextElement.FontWeight>Bold</TextElement.FontWeight>
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Background" Value="Red"></Setter>
-                </Style>
-            </TextBlock.Style>
         </TextBlock>
         <TextBlock Grid.Column="9" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock.Text>Remaining Moves</TextBlock.Text>
@@ -81,6 +86,8 @@
         <Rectangle Grid.Row="4" Grid.Column="8" Fill="OliveDrab"></Rectangle>
         <Rectangle Grid.Row="7" Grid.Column="8" Fill="OliveDrab"></Rectangle>
         <Rectangle Grid.Row="8" Grid.Column="8" Fill="OliveDrab"></Rectangle>
+
+        <ContentControl Grid.Row="0" Grid.RowSpan="8" Grid.Column="0" Grid.ColumnSpan="8" Content="{Binding}"/>
     </Grid>
 
 </Window>

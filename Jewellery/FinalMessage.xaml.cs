@@ -12,27 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Jewellery;
 
-namespace Bejewelled
+namespace Jewellery
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FinalMessage : UserControl
     {
-        public const int ROW = 8;
-        public const int COLUMN = 8;
-
-        Grid grid;
-        public MainWindow()
+        public FinalMessage()
         {
             InitializeComponent();
-           // rand = new Random();
-            grid = gamegrid;
-            Container container = new Container(this ,grid, score, movecount, 5);
-            container.init();
         }
-
     }
 }
