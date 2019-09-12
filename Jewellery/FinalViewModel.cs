@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Jewellery
 {
+    /**
+     * Constructor
+     */
     public class FinalViewModel
     {
     }

@@ -8,6 +8,14 @@ namespace Jewellery
 {
     public class RedJewel : Jewel
     {
+
+        /**
+        * Constructor
+        * @param x, the x index 
+        * @param y, the y index
+        * @param switcher, the JewelSwitcher 
+        * @param manager, the JewelManager
+        */
         public RedJewel(int x, int y, JewelSwitcher switcher, JewelManager manager) : base(x, y, switcher, manager)
         {
             type = Type.RED;

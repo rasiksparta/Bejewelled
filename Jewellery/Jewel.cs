@@ -13,17 +13,23 @@ namespace Jewellery
 {
     public abstract class Jewel : Button
     {
-        protected int x, y;
-        protected JewelSwitcher switcher;
-        protected Type type;
+        protected int x, y; // Grid index
+        protected JewelSwitcher switcher; // the JewelSwitcher
+        protected Type type; // the type of this jewel
+         
+        private JewelManager manager; // the JewelManager
 
-        private JewelManager manager;
-
+        /**
+         * The Type enum, the three existing types of jewel
+         */
         public enum Type
         {
             BLUE, RED, PURPLE
         }
 
+        /**
+         * The Direction enum, holds the 4 possible direction a valid neighbouring jewel can occur at
+         */
         public enum Direction
         {
             LEFT, RIGHT, UP, DOWN, OMNI
@@ -31,6 +37,10 @@ namespace Jewellery
 
         /**
          * Constructor
+         * @param x, the x index 
+         * @param y, the y index
+         * @param switcher, the JewelSwitcher 
+         * @param manager, the JewelManager
          */
         public Jewel(int x, int y, JewelSwitcher switcher, JewelManager manager)
         {
@@ -41,6 +51,9 @@ namespace Jewellery
             this.Click += ButtonClick;
         }
 
+        /**
+         * Getters and setters
+         */
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
         public Type JewelType { get => type; }
@@ -58,6 +71,10 @@ namespace Jewellery
             else return Direction.UP;
         }
         
+        /**
+         * Switch place with a given jewel
+         * @param jewel, the jewel to exchange place with
+         */
         public void SwitchPlace(Jewel jewel)
         {
             string str = "before jewelA: " + x + "," + y;
@@ -157,7 +174,7 @@ namespace Jewellery
          */
         public void Destroy(bool isLast)
         {
-            DoubleAnimation animation = new DoubleAnimation(0, TimeSpan.FromSeconds(2));
+            DoubleAnimation animation = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
 
             // set Event handler
             animation.Completed += (s, e) => {

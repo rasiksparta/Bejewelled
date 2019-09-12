@@ -25,10 +25,13 @@ namespace Bejewelled
         public const int COLUMN = 8;
 
         Grid grid;
+
+        /**
+         * Constructor        
+         */
         public MainWindow()
         {
             InitializeComponent();
-           // rand = new Random();
             grid = gamegrid;
             Container container = new Container(this ,grid, score, movecount, 5);
             container.init();

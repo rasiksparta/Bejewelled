@@ -13,12 +13,21 @@ namespace Jewellery
         private TextBlock moveCount;
         private TextBlock scoreCount;
 
+        /**
+         * Constructor 
+         * @param moveCount, the TextBlock element that displays move count
+         * @param scoreCount, the TextBlock element that displays score count
+         */
         public ScoreTracker(TextBlock moveCount, TextBlock scoreCount)
         {
             this.moveCount = moveCount;
             this.scoreCount = scoreCount;
         }
 
+        /**
+         * Increment score 
+         * @param value, the amount by which to increment the score
+         */
         public void ScoreIncrement(int value)
         {
             int score = Int32.Parse(scoreCount.Text);
@@ -27,6 +36,9 @@ namespace Jewellery
         }
 
 
+        /**
+         * Decrement the move count by 1
+         */
         public void moveDecrement()
         {
             int move = Int32.Parse(moveCount.Text);
@@ -34,10 +46,17 @@ namespace Jewellery
             moveCount.Text = move.ToString();
         }
 
+        /**
+         * @return move count
+         */
         public int getMoveCount()
         {
             return Int32.Parse(moveCount.Text);
         }
+
+        /**
+         * @return score count
+         */
         public int getScore()
         {
             return Int32.Parse(scoreCount.Text);

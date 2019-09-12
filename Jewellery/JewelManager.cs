@@ -78,9 +78,8 @@ namespace Jewellery
         }
 
         /**
-         * Update 
-         * 
-         * This hasn't been implemented properly
+         * Update add jewels  
+         * @param jewelArr, the array of jewels to add
          */
         public void Update(Jewel[,] jewelArr)
         {
