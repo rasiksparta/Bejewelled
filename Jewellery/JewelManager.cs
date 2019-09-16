@@ -20,8 +20,8 @@ namespace Jewellery
         bool addJewel;
         private HashSet<Jewel> alteredJewels; // list of jewels that have been added as replacement or jewel whose location has been changed
                                               // since last move
-
         private Container container;
+        private int jewelDeletionCount;
 
         /**
          * Constructor
@@ -41,6 +41,7 @@ namespace Jewellery
             addJewel = true;
             alteredJewels = new HashSet<Jewel>();
             this.container = container;
+            jewelDeletionCount = 0;
         }
 
         public Jewel[,] JewelArr { get => jewelArr; }
@@ -120,31 +121,37 @@ namespace Jewellery
          */
         public void RemoveJewels(HashSet<Jewel> jewels)
         {
+            //MessageBoxResult ms = MessageBox.Show("jewels to remove: " + jewels.Count);
             bool isLast = false; // check for last element
             HashSet<Jewel> removeList = new HashSet<Jewel>();
 
             // Get all jewels in valid chains 
             foreach (Jewel jewel in jewels)
             {
-                CheckForChain(0, jewel, removeList);   
-                
+                HashSet<Jewel> temp = new HashSet<Jewel>();
+                CheckForChain(0, jewel, temp);
+                removeList = new HashSet<Jewel>(removeList.Concat(temp));
             }
 
             container.ScoreTracker.ScoreIncrement(removeList.Count);
 
+            jewelDeletionCount = removeList.Count;
             // remove the jewels
             foreach (Jewel jewelToRemove in removeList)
             {
-                jewelArr[jewelToRemove.X, jewelToRemove.Y] = null;
+                //jewelArr[jewelToRemove.X, jewelToRemove.Y] = null;
                 if (removeList.Last().Equals(jewelToRemove))
                 {
-                    isLast = true; 
+                    isLast = true;
+                    //ms = MessageBox.Show("checkpoint");
                 }
                 jewelToRemove.Destroy(isLast);
             }
 
             if (removeList.Count == 0)
             {
+                //ms = MessageBox.Show("remove list is empty");
+                //MessageBoxResult ms = MessageBox.Show(alteredJewels.Count.ToString());
                 if (container.ScoreTracker.getMoveCount() <= 0)
                 {
                     container.End();
@@ -158,22 +165,29 @@ namespace Jewellery
          */
         public void RefillJewels()
         {
+            if (jewelDeletionCount > 0)
+            {
+                return;
+            }
+            //HashSet<Jewel> newJewels = new HashSet<Jewel>();
             HashSet<Jewel> newJewels = new HashSet<Jewel>();
-           
             foreach(Jewel jewel in alteredJewels)
             {
                 int type = (int)rand.Next(3);
                 Jewel newJewel = CreateJewel(type, jewel.X, jewel.Y);
                 newJewels.Add(newJewel);
-                jewelArr[jewel.X, jewel.Y] = newJewel;
+                jewelArr[newJewel.X, newJewel.Y] = newJewel;
+              //  MessageBoxResult m = MessageBox.Show(newJewel.X.ToString()); ;
 
                 grid.Children.Remove(jewel);
                 grid.Children.Add(newJewel);
                 Grid.SetColumn(newJewel, newJewel.X);
                 Grid.SetRow(newJewel, newJewel.Y);
             }
+            //MessageBoxResult ms = MessageBox.Show("new jewel: " + alteredJewels.Count.ToString());
 
             alteredJewels.Clear();
+            //ms = MessageBox.Show("new jewel added");
             RemoveJewels(newJewels);
         }
 
@@ -183,6 +197,7 @@ namespace Jewellery
          */
         public void AddToAlteredList(Jewel jewel)
         {
+            jewelDeletionCount--;
             alteredJewels.Add(jewel);
         }
 
@@ -198,12 +213,12 @@ namespace Jewellery
          */
         private int CheckForChain(int count, Jewel jewel, HashSet<Jewel> removeList ,Jewel.Direction direction = Jewel.Direction.LEFT ,Jewel root = null)
         {
+            if (removeList.Contains(jewel)) return 0;
             count++;
             // if root is null, which means this is the first jewel from where we start checking for a chain
             if(root == null) {
                 // check if there are any neighbouring jewel of same type
-                Dictionary<Jewel.Direction,Jewel> branches = jewel.GetMachingNeighbour();
-                
+                Dictionary<Jewel.Direction,Jewel> branches = jewel.GetMachingNeighbour();              
 
                 foreach (Jewel.Direction dir in branches.Keys)
                 {
@@ -224,8 +239,8 @@ namespace Jewellery
                     }
                     else
                     {
-                        count = 1;
                         removeList.Clear();
+                        count = 1;
                     }
                 }
             }
@@ -240,11 +255,7 @@ namespace Jewellery
                     branches.TryGetValue(direction, out branch);
                     count = CheckForChain(count, branch, removeList, direction, jewel);
                 }
-                
-                if (count >= 2)
-                {
-                    removeList.Add(jewel);
-                }
+                removeList.Add(jewel);
             }
             return count;
         }

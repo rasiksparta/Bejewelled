@@ -77,8 +77,8 @@ namespace Jewellery
          */
         public void SwitchPlace(Jewel jewel)
         {
-            string str = "before jewelA: " + x + "," + y;
-            str += " jewelB: " + jewel.x + "," + jewel.y; 
+          //  string str = "before jewelA: " + x + "," + y;
+          //  str += " jewelB: " + jewel.x + "," + jewel.y; 
             int prevX = x;
             int prevY = y;
 
@@ -90,8 +90,8 @@ namespace Jewellery
 
             manager.JewelArr[jewel.X, jewel.Y] = jewel;
             manager.JewelArr[x, y] = this;
-            str += " After jewelA: " + manager.JewelArr[x, y].X + "," + manager.JewelArr[x, y].Y;
-            str += " jewelB: " + manager.JewelArr[jewel.X, jewel.Y].X + "," + manager.JewelArr[jewel.X, jewel.Y].Y;
+           // str += " After jewelA: " + manager.JewelArr[x, y].X + "," + manager.JewelArr[x, y].Y;
+           // str += " jewelB: " + manager.JewelArr[jewel.X, jewel.Y].X + "," + manager.JewelArr[jewel.X, jewel.Y].Y;
            // MessageBoxResult ms = MessageBox.Show(str);
         }
 
@@ -174,17 +174,19 @@ namespace Jewellery
          */
         public void Destroy(bool isLast)
         {
+           
             DoubleAnimation animation = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
-
+            
             // set Event handler
             animation.Completed += (s, e) => {
                 manager.AddToAlteredList(this);
-                if (isLast)
-                {
+                
+                //if (isLast)
+                //{
                     manager.RefillJewels();
-                }
+                //}
             };
-            BeginAnimation(OpacityProperty, animation);       
+            BeginAnimation(OpacityProperty, animation);
         }
 
         /**

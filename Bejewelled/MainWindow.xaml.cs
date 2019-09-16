@@ -33,7 +33,7 @@ namespace Bejewelled
         {
             InitializeComponent();
             grid = gamegrid;
-            Container container = new Container(this ,grid, score, movecount, 5);
+            Container container = new Container(this ,grid, score, movecount, 100);
             container.init();
         }
 
